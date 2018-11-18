@@ -59,23 +59,37 @@ body{
     border: 1px solid rgb(238, 255, 0);
 
     width: 70%;
-    height: 500px;
+    height: auto;
 
     vertical-align: top;
 }
 
         .video-block .output-video-block{
             background-color: rgba(0, 0, 0, 0.514);
-            height: 80%;
+            min-height:300px;
             width: 100%;
         }
 
         .video-block .info-block{
             background-color: rgba(243, 243, 243, 0.514);
             width: 100%;
-            height: 20%;
-        }
+            height: 100px;
 
+            display: flex;
+            justify-content: space-between;
+        }
+                .video-block .info-block .info-title{
+                    width: 450px;
+                    height: 100%;
+                    background: rgb(94, 94, 94);
+                }
+                .video-block .info-block .info-views{
+                    width: 170px;
+                    height: 100%;
+                    background: rgb(94, 94, 94);
+
+                    margin-right: 30px;
+                }
 
 
 .search-result-block{
@@ -89,9 +103,40 @@ body{
     background-color: rgba(0, 128, 0, 0.185);
    
 }
+
+        .search-result-block .page-switcher{
+            height: 50px;
+            width: 100%;
+            background: rgb(163, 126, 126);
+            display: flex;
+            justify-content: space-around
+        }
+
+                .search-result-block .page-switcher .page-left{
+                    height: 100%;
+                    width: 35%;
+                    background-color: rgb(74, 74, 163);
+                }
+
+                .search-result-block .page-switcher .current-page{
+                    height: 100%;
+                    width: 50px;
+                    background-color: rgb(74, 74, 163);
+                }
+
+                .search-result-block .page-switcher .page-right{
+                    height: 100%;
+                    width: 35%;
+                    background-color: rgb(74, 74, 163);
+                }
+
+
+
 @media (max-width: 1000px) {
   
-   
+    .video-block .info-block .info-title{
+        width: 350px;
+    }
     .search-result-block{
         width: 30.5%;
     }
@@ -122,5 +167,10 @@ body{
     }
     .search-block .logo{
         display: none;
+    }
+
+
+    .video-block .info-block .info-title{
+        width: 300px;
     }
   }

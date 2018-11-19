@@ -225,12 +225,13 @@ body{
     .searched-videos{
         display: flex;
         width: 100%;
+        justify-content: space-around;
         /* grid-template-columns: auto auto auto auto;
         grid-template-rows: 1fr;
         */
     }
     .searched-videos .searched-video{
-       width: 10%;
+       width: 20%;
     }
 
     

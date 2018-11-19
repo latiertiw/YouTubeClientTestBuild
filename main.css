@@ -13,9 +13,6 @@ body{
     background-color: rgb(107, 88, 122);
     width: 100%;
     max-width: 1200px;
-    min-height: 1000px;
-
-    
 }
 
 .search-block{
@@ -58,7 +55,7 @@ body{
     box-sizing: border-box;
     border: 1px solid rgb(238, 255, 0);
 
-    width: 70%;
+    width: 65%;
     height: auto;
 
     vertical-align: top;
@@ -70,20 +67,20 @@ body{
             width: 100%;
         }
 
-        .video-block .info-block{
+        .video-block .top-info-block{
             background-color: rgba(243, 243, 243, 0.514);
             width: 100%;
-            height: 100px;
+            height: 75px;
 
             display: flex;
             justify-content: space-between;
         }
-                .video-block .info-block .info-title{
+                .video-block .top-info-block .info-title{
                     width: 450px;
                     height: 100%;
                     background: rgb(94, 94, 94);
                 }
-                .video-block .info-block .info-views{
+                .video-block .top-info-block .info-views{
                     width: 170px;
                     height: 100%;
                     background: rgb(94, 94, 94);
@@ -91,14 +88,20 @@ body{
                     margin-right: 30px;
                 }
 
+        .video-block .bottom-info-block{
+           width: 100%;
+           min-height: 100px;
+           background-color: rgb(182, 182, 182);
+        }
+
 
 .search-result-block{
     display: inline-block;
     box-sizing: border-box;
     border: 1px solid rgb(60, 255, 0);
   
-    width: 29.5%;
-    min-height: 1000px;
+    width: 34.5%;
+    height: auto;
 
     background-color: rgba(0, 128, 0, 0.185);
    
@@ -116,6 +119,10 @@ body{
                     height: 100%;
                     width: 35%;
                     background-color: rgb(74, 74, 163);
+
+                    background-image: url(img/arrow-left.png);
+                    background-size: contain;
+                  
                 }
 
                 .search-result-block .page-switcher .current-page{
@@ -128,20 +135,60 @@ body{
                     height: 100%;
                     width: 35%;
                     background-color: rgb(74, 74, 163);
+
+                    background-image: url(img/arrow-right.png);
+                    background-size: contain;
+                }
+
+        .searched-videos{
+            width: 100%;
+            height: 100%;
+            background-color: rgb(148, 148, 148);
+            min-height: 300px;
+           
+
+           /*  display: flex;
+            flex-direction: column;
+           align-items: center; */
+           display: grid;
+           grid-template-columns: auto auto ;
+          grid-template-rows: repeat(10,auto)
+        }
+
+                .searched-video{
+                    justify-self: center;
+                    width: 100%;
+
+                    height: auto;
+                    min-height: 140px;
+                    min-width: 120px;
+                    border: 1px solid black;
                 }
 
 
-
-@media (max-width: 1000px) {
-  
-    .video-block .info-block .info-title{
-        width: 350px;
-    }
+@media (max-width: 1120px) {
     .search-result-block{
         width: 30.5%;
     }
     .video-block{
        width: 69%;
+    }
+}
+
+@media (max-width: 1000px) {
+  
+    .video-block .top-info-block .info-title{
+        width: 350px;
+    }
+    .search-result-block{
+        width: 25.5%;
+    }
+    .video-block{
+       width: 74%;
+    }
+
+    .searched-videos{
+        grid-template-columns:  auto;
     }
 
   }
@@ -170,7 +217,27 @@ body{
     }
 
 
-    .video-block .info-block .info-title{
+    .video-block .top-info-block .info-title{
         width: 300px;
     }
+
+    .searched-videos{
+        display: flex;
+        width: 100%;
+        /* grid-template-columns: auto auto auto auto;
+        grid-template-rows: 1fr;
+        */
+    }
+    .searched-videos .searched-video{
+       width: 10%;
+    }
+
+    
+  }
+
+
+  footer{
+width: 100%;
+height: 100px;
+background: rgba(0, 0, 0, 0.411);
   }

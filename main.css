@@ -163,6 +163,7 @@ body{
                     min-height: 140px;
                     min-width: 120px;
                     border: 1px solid black;
+                    overflow: hidden;
                 }
 
 

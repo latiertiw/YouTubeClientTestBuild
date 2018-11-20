@@ -41,3 +41,4 @@ document.body.appendChild(item);
             item=document.createElement('div');
             item.className='bottom-info-block';
             document.querySelector('.video-block .info-block').appendChild(item);
+            

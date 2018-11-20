@@ -6,13 +6,14 @@
 body{
     display: flex;
     justify-content: center;
-   
+    
 }
 
 .wrapper{
     background-color: rgb(107, 88, 122);
     width: 100%;
     max-width: 1200px;
+  
 }
 
 .search-block{
@@ -47,6 +48,11 @@ body{
            width: 80px;
             margin-left: 2px;
             font-size: 16px;
+
+            background-image: url(img/search.png);
+            background-repeat: no-repeat;
+           
+           background-position: center center;
         }
 
 
@@ -159,8 +165,8 @@ body{
                     justify-self: center;
                     width: 100%;
 
-                    height: auto;
-                    min-height: 140px;
+                    /* height: auto; */
+                    min-height: 150px;
                     min-width: 120px;
                     border: 1px solid black;
                     overflow: hidden;
@@ -226,12 +232,15 @@ body{
         display: flex;
         width: 100%;
         justify-content: space-around;
+        min-height: 120px;
         /* grid-template-columns: auto auto auto auto;
         grid-template-rows: 1fr;
         */
     }
     .searched-videos .searched-video{
        width: 20%;
+       min-width: 180px;
+       min-height: 120px;
     }
 
     

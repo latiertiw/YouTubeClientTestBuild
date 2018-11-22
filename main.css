@@ -6,7 +6,7 @@
 body{
     display: flex;
     justify-content: center;
-    min-width: 504px;
+
 }
 
 .wrapper{
@@ -241,6 +241,15 @@ body{
        width: 20%;
        min-width: 180px;
        min-height: 120px;
+    }
+
+    @media (max-width: 500px) {
+        .video-block .top-info-block .info-title{
+            width: 220px;
+        }
+        .video-block .top-info-block .info-views{
+            width: 125px;
+        }
     }
 
     

@@ -49,6 +49,11 @@ function search(){
        }
 });
 }
+function cleanSearchBlock(){
+    while(block.firstChild){
+        block.removeChild(block.firstChild);
+    }
+}
 
 function fill(){
     cleanSearchBlock();
@@ -60,6 +65,7 @@ function fill(){
     else if(document.body.clientWidth>550){add(3)}
     else{add(2)}
 }
+
 
 function add(count){
 for(let i=0;i<count;i++){
@@ -73,15 +79,18 @@ for(let i=0;i<count;i++){
 
 
 
-function cleanSearchBlock(){
-    while(block.firstChild){
-        block.removeChild(block.firstChild);
-    }
-}
+
 
 window.addEventListener('resize', resize);
 
   function resize(){
      // console.log(document.body.clientWidth)
-     fill();
+     cleanSearchBlock();
+     if(document.body.clientWidth>1000){
+         add(8)
+     }
+     else if(document.body.clientWidth>800){add(6)}
+     else if(document.body.clientWidth>730){add(4)}
+     else if(document.body.clientWidth>550){add(3)}
+     else{add(2)}
   }

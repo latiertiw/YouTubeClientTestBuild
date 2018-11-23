@@ -9,7 +9,7 @@ numberOfPages=document.querySelector('.page-switcher .current-page');
 let baseUrl ="https://www.googleapis.com/youtube/v3/search?key=AIzaSyC0vey-MWqac8d52xu5VWF1r6q3e59xI0Q&type=video&part=snippet&maxResults=8";
 let baseSUrl='https://www.googleapis.com/youtube/v3/videos?key=AIzaSyC0vey-MWqac8d52xu5VWF1r6q3e59xI0Q&id=';
 let Url;
-//(document.body.clientWidth);
+
 
 let bufferedVideos=[];
 let pages=[];
@@ -56,7 +56,9 @@ function load(){
         
         loadedCount++;
        }
-});
+       setTimeout(function(){resize()},1000);
+       console.log('load waw loaded');
+    })
 }
 
 function search(){
@@ -97,8 +99,16 @@ function search(){
         
         loadedCount++;
        }
-})
+       setTimeout(function(){resize()},1000);
+       console.log('search was loaded')
+    })
+   
+    
+    
+
 }
+
+
 
 function cleanSearchBlock(){
     while(block.firstChild){
@@ -110,7 +120,6 @@ function createPages(size){
     let pagesCount=Math.ceil(bufferedVideos.length/size);
     pages=[];
     
-
     let placed=0;
     for(let i=0;i<pagesCount;i++){
         pages[i]=[];
@@ -121,36 +130,44 @@ function createPages(size){
             }
         }
     }
-   // console.log(pagesCount)
+    console.log('Create pages was created');
 }
 
 function renderPage(number){
-    for(let i=0;i<pages[number].length;i++){
-        item=document.createElement('div');
+    let urlVideoBase='https://www.youtube.com/embed/';
+   // console.log('start');
+    for (let i=0;i<pages[number].length;i++){
+        item=document.createElement('img');
         item.className='searched-video';
+        
+        item.alt=urlVideoBase+ pages[number][i].videoId;
+        item.src=pages[number][i].imageSource;
+            item.addEventListener("click", select);
         block.appendChild(item);
     }
+  //  console.log('end');
 }
 
 function nextPage(){
     currentPage += 1;
-    if(currentPage>pages.length){
+    if(currentPage>=pages.length){
         load();
     }
-    resize();
+    //setTimeout(function(){resize()},1000);
+    resize()
 }
 
 function prevPage(){
     if(currentPage !==0 ){
         currentPage -= 1;
     }
-    resize();
+    //setTimeout(function(){resize()},1000);
+    resize()
 }
 
-
-
-  function resize(){
+function resize(){
      cleanSearchBlock();
+     console.log(pages.length)
      numberOfPages.textContent=currentPage+1;
      if(document.body.clientWidth>1000){
          createPages(8);
@@ -172,4 +189,8 @@ function prevPage(){
          createPages(2);
          renderPage(currentPage);
         }
-  }
+}
+
+function select(){
+    outBlock.src=this.alt;
+}

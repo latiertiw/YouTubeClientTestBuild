@@ -126,7 +126,7 @@ body{
                     width: 35%;
                     background-color: rgb(74, 74, 163);
 
-                    background-image: url(img/arrow-left.png);
+                   /*  background-image: url(img/arrow-left.png); */
                     background-size: contain;
                   
                 }
@@ -142,7 +142,7 @@ body{
                     width: 35%;
                     background-color: rgb(74, 74, 163);
 
-                    background-image: url(img/arrow-right.png);
+                  /*   background-image: url(img/arrow-right.png); */
                     background-size: contain;
                 }
 

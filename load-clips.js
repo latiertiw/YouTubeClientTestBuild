@@ -17,11 +17,11 @@ let loadedCount=0;
 let nextPageToken='';
 let lastSearch;
 let currentPage=0;
+let lastWindowSizeIndex=0;
 
 
 
 button.addEventListener("click", search);
-window.addEventListener('resize', resize);
 
 function load(){
     Url=baseUrl+'&pageToken='+nextPageToken+'&q='+lastSearch;
@@ -56,14 +56,13 @@ function load(){
         
         loadedCount++;
        }
-       setTimeout(function(){resize()},1000);
-       console.log('load waw loaded');
     })
 }
 
 function search(){
     pageRight.addEventListener("click", nextPage);
     pageLeft.addEventListener("click", prevPage);
+    window.addEventListener('resize', resize);
     bufferedVideos=[];
     nextPageToken='';
     lastSearch=searchInput.value;
@@ -100,7 +99,6 @@ function search(){
         loadedCount++;
        }
        setTimeout(function(){resize()},1000);
-       console.log('search was loaded')
     })
    
     
@@ -130,66 +128,92 @@ function createPages(size){
             }
         }
     }
-    console.log('Create pages was created');
 }
 
 function renderPage(number){
     let urlVideoBase='https://www.youtube.com/embed/';
-   // console.log('start');
     for (let i=0;i<pages[number].length;i++){
         item=document.createElement('img');
         item.className='searched-video';
         
         item.alt=urlVideoBase+ pages[number][i].videoId;
         item.src=pages[number][i].imageSource;
-            item.addEventListener("click", select);
+        item.addEventListener("click", select);
         block.appendChild(item);
     }
-  //  console.log('end');
+  
 }
 
 function nextPage(){
+    lastWindowSizeIndex=0;
     currentPage += 1;
     if(currentPage>=pages.length){
         load();
+        setTimeout(function(){resize()},1000);
     }
-    //setTimeout(function(){resize()},1000);
-    resize()
+    else resize();
+    
 }
 
 function prevPage(){
+    lastWindowSizeIndex=0;
     if(currentPage !==0 ){
         currentPage -= 1;
     }
-    //setTimeout(function(){resize()},1000);
     resize()
 }
 
 function resize(){
-     cleanSearchBlock();
-     console.log(pages.length)
      numberOfPages.textContent=currentPage+1;
-     if(document.body.clientWidth>1000){
+        
+     if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
+        cleanSearchBlock();
+         lastWindowSizeIndex=1;
          createPages(8);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
          renderPage(currentPage);
      }
-     else if(document.body.clientWidth>800){
+     else if(document.body.clientWidth>800 && document.body.clientWidth<1000 && lastWindowSizeIndex!==2){
+        cleanSearchBlock();
+        lastWindowSizeIndex=2;
          createPages(6);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
          renderPage(currentPage);
     }
-     else if(document.body.clientWidth>730){
+     else if(document.body.clientWidth>730 && document.body.clientWidth<800 && lastWindowSizeIndex!==3){
+        cleanSearchBlock();
+        lastWindowSizeIndex=3;
          createPages(4);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
          renderPage(currentPage);
     }
-     else if(document.body.clientWidth>550){
+     else if(document.body.clientWidth>550 && document.body.clientWidth<730  && lastWindowSizeIndex!==4){
+        cleanSearchBlock();
+        lastWindowSizeIndex=4;
          createPages(3)
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
          renderPage(currentPage);
         }
-     else{
-         createPages(2);
+     else if(document.body.clientWidth>200 && document.body.clientWidth<550  && lastWindowSizeIndex!==5){
+        cleanSearchBlock();
+        lastWindowSizeIndex=5;
+         createPages(1000);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
          renderPage(currentPage);
         }
 }
+
+
 
 function select(){
     outBlock.src=this.alt;

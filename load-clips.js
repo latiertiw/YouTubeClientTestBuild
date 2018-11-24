@@ -164,6 +164,7 @@ function prevPage(){
 }
 
 function resize(){
+    if(currentPage<1) currentPage=1;
      numberOfPages.textContent=currentPage+1;
         
      if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){

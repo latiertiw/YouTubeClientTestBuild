@@ -157,9 +157,15 @@ function nextPage(){
     currentPage += 1;
     if(currentPage>=pages.length-1){
         load();
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
         setTimeout(function(){resize()},1000);
+        setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},1001) 
     }
-    else resize();
+    else {
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
+        setTimeout(function(){resize()},500);
+        setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},501) 
+    }
     
 }
 
@@ -168,7 +174,9 @@ function prevPage(){
     if(currentPage !==0 ){
         currentPage -= 1;
     }
-    resize()
+    scrollToElement(document.querySelector('.search-result-block .searched-videos').firstElementChild,1)
+    setTimeout(function(){resize()},500);
+    setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},501) 
 }
 
 function resize(){
@@ -238,11 +246,13 @@ function select(){
 
 var initialPoint;
 var finalPoint;
+
 block.addEventListener('touchstart', function(event) {
 event.preventDefault();
 event.stopPropagation();
 initialPoint=event.changedTouches[0];
 }, false);
+
 block.addEventListener('touchend', function(event) {
 event.preventDefault();
 event.stopPropagation();
@@ -259,11 +269,34 @@ else{
     prevPage()
 /*СВАЙП ВПРАВО*/}
 }
-else {
-if (finalPoint.pageY < initialPoint.pageY){
-/*СВАЙП ВВЕРХ*/}
-else{
-/*СВАЙП ВНИЗ*/}
-}
 }
 }, false);
+
+
+function scrollToElement(theElement,par) {
+
+    
+    var selectedPosX = 0;
+    var selectedPosY = 0;
+  
+    while (theElement != null) {
+        selectedPosX += theElement.offsetLeft;
+        selectedPosY += theElement.offsetTop;
+        theElement = theElement.offsetParent;
+    }
+
+    if(par==1){
+    pos={
+        behavior: "smooth"
+    }
+    pos.left=selectedPosX;
+    pos.top=selectedPosY;
+    block.scrollTo(pos);
+    }
+
+    else block.scrollTo(selectedPosX,selectedPosY);
+
+}
+
+
+

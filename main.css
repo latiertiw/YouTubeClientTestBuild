@@ -239,7 +239,6 @@ body{
     .searched-videos{
         display: flex;
         width: 100%;
-      
         min-height: 120px;
         overflow: hidden;
     }

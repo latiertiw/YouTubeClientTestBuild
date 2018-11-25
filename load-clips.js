@@ -6,7 +6,7 @@ pageRight=document.querySelector('.page-switcher .page-right');
 pageLeft=document.querySelector('.page-switcher .page-left');
 numberOfPages=document.querySelector('.page-switcher .current-page');
 
-let baseUrl ="https://www.googleapis.com/youtube/v3/search?key=AIzaSyC0vey-MWqac8d52xu5VWF1r6q3e59xI0Q&type=video&part=snippet&maxResults=8";
+let baseUrl ="https://www.googleapis.com/youtube/v3/search?key=AIzaSyC0vey-MWqac8d52xu5VWF1r6q3e59xI0Q&type=video&part=snippet&maxResults=16";
 let baseSUrl='https://www.googleapis.com/youtube/v3/videos?key=AIzaSyC0vey-MWqac8d52xu5VWF1r6q3e59xI0Q&id=';
 let Url;
 
@@ -30,7 +30,7 @@ function load(){
     .then(res=>{    
        let answer=JSON.parse(res);
        nextPageToken=answer.nextPageToken;
-       for(let loadQuerry=0;loadQuerry<8;loadQuerry++){
+       for(let loadQuerry=0;loadQuerry<16;loadQuerry++){
 
         let card=new Object();
 
@@ -72,7 +72,7 @@ function search(){
     .then(res=>{    
        let answer=JSON.parse(res);
        nextPageToken=answer.nextPageToken;
-       for(let loadQuerry=0;loadQuerry<8;loadQuerry++){
+       for(let loadQuerry=0;loadQuerry<16;loadQuerry++){
 
         let card=new Object();
 
@@ -131,6 +131,13 @@ function createPages(size){
 }
 
 function renderPage(number){
+
+    otem=document.createElement('div');
+    otem.className='searched-page';
+   // block.appendChild(item);
+
+    item=block.lastElementChild;
+
     let urlVideoBase='https://www.youtube.com/embed/';
     for (let i=0;i<pages[number].length;i++){
         item=document.createElement('img');
@@ -139,15 +146,16 @@ function renderPage(number){
         item.alt=urlVideoBase+ pages[number][i].videoId;
         item.src=pages[number][i].imageSource;
         item.addEventListener("click", select);
-        block.appendChild(item);
+        otem.appendChild(item);
     }
+    block.appendChild(otem)
   
 }
 
 function nextPage(){
     lastWindowSizeIndex=0;
     currentPage += 1;
-    if(currentPage>=pages.length){
+    if(currentPage>=pages.length-1){
         load();
         setTimeout(function(){resize()},1000);
     }
@@ -164,7 +172,7 @@ function prevPage(){
 }
 
 function resize(){
-    if(currentPage<1) currentPage=1;
+    if(currentPage<0) currentPage=0;
      numberOfPages.textContent=currentPage+1;
         
      if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
@@ -206,11 +214,16 @@ function resize(){
      else if(document.body.clientWidth>200 && document.body.clientWidth<550  && lastWindowSizeIndex!==5){
         cleanSearchBlock();
         lastWindowSizeIndex=5;
-         createPages(1000);
+         createPages(2);
          if(currentPage>=pages.length){
             currentPage=pages.length-1;
         }
+        
+        if(currentPage>0){
+        renderPage(currentPage-1);
+        }
          renderPage(currentPage);
+        renderPage(currentPage+1);
         }
 }
 
@@ -219,3 +232,38 @@ function resize(){
 function select(){
     outBlock.src=this.alt;
 }
+
+
+
+
+var initialPoint;
+var finalPoint;
+block.addEventListener('touchstart', function(event) {
+event.preventDefault();
+event.stopPropagation();
+initialPoint=event.changedTouches[0];
+}, false);
+block.addEventListener('touchend', function(event) {
+event.preventDefault();
+event.stopPropagation();
+finalPoint=event.changedTouches[0];
+var xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
+var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
+if (xAbs > 20 || yAbs > 20) {
+if (xAbs > yAbs) {
+if (finalPoint.pageX < initialPoint.pageX){
+    nextPage()
+/*СВАЙП ВЛЕВО*/}
+else{
+
+    prevPage()
+/*СВАЙП ВПРАВО*/}
+}
+else {
+if (finalPoint.pageY < initialPoint.pageY){
+/*СВАЙП ВВЕРХ*/}
+else{
+/*СВАЙП ВНИЗ*/}
+}
+}
+}, false);

@@ -166,7 +166,9 @@ function renderPage(number,type){
         item=document.createElement('img');
         item.className='searched-video';
         
-        item.alt=urlVideoBase+ pages[number][i].videoId;
+        
+        let info=urlVideoBase+pages[number][i].videoId+' '+pages[number][i].channelTitle+' '+pages[number][i].videoDescription+' '+pages[number][i].videoTitle+' '+pages[number][i].publishedTime+' '+pages[number][i].viewCount;
+        item.alt=info;
         item.src=pages[number][i].imageSource;
         item.addEventListener("click", select);
         PageItem.appendChild(item);
@@ -261,7 +263,8 @@ function resize(){
 
 
 function select(){
-    outBlock.src=this.alt;
+    let Info=this.alt.split(' ');
+    outBlock.src=Info[0];
 }
 
 
@@ -271,14 +274,14 @@ var initialPoint;
 var finalPoint;
 
 block.addEventListener('touchstart', function(event) {
-event.preventDefault();
-event.stopPropagation();
+//event.preventDefault();
+//event.stopPropagation();
 initialPoint=event.changedTouches[0];
 }, false);
 
 block.addEventListener('touchend', function(event) {
-event.preventDefault();
-event.stopPropagation();
+//event.preventDefault();
+//event.stopPropagation();
 finalPoint=event.changedTouches[0];
 var xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
 var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);

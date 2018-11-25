@@ -151,13 +151,14 @@ body{
             height: 100%;
             background-color: rgb(148, 148, 148);
             min-height: 50px;
-
-           display: grid;
-           grid-template-columns: auto auto ;
-          grid-template-rows: repeat(10,auto)
+            overflow: hidden;
+           display: block;
+           
+          
         }
                 .searched-page{
-                    width: 100%;
+                    min-width: 100%;
+                    max-width: 100%;
                     height: 100%;
                     background-color: rgb(148, 148, 148);
                     min-height: 50px;

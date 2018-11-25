@@ -107,172 +107,6 @@ function search(){
 }
 
 
-
-function cleanSearchBlock(){
-    while(block.firstChild){
-        block.removeChild(block.firstChild);
-    }
-}
-
-function createPages(size){
-    let pagesCount=Math.ceil(bufferedVideos.length/size);
-    pages=[];
-    
-    let placed=0;
-    for(let i=0;i<pagesCount;i++){
-        pages[i]=[];
-        for(let j=0; j<size;j++){
-            if(placed<bufferedVideos.length){
-                pages[i].push(bufferedVideos[placed]);
-                placed++;
-            }
-        }
-    }
-}
-
-function renderPage(number){
-
-    otem=document.createElement('div');
-    otem.className='searched-page';
-   // block.appendChild(item);
-
-    item=block.lastElementChild;
-
-    let urlVideoBase='https://www.youtube.com/embed/';
-    for (let i=0;i<pages[number].length;i++){
-        item=document.createElement('img');
-        item.className='searched-video';
-        
-        item.alt=urlVideoBase+ pages[number][i].videoId;
-        item.src=pages[number][i].imageSource;
-        item.addEventListener("click", select);
-        otem.appendChild(item);
-    }
-    block.appendChild(otem)
-  
-}
-
-function nextPage(){
-    lastWindowSizeIndex=0;
-    currentPage += 1;
-    if(currentPage>=pages.length-1){
-        load();
-        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
-        setTimeout(function(){resize()},1000);
-        setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},1001) 
-    }
-    else {
-        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
-        setTimeout(function(){resize()},500);
-        setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},501) 
-    }
-    
-}
-
-function prevPage(){
-    lastWindowSizeIndex=0;
-    if(currentPage !==0 ){
-        currentPage -= 1;
-    }
-    scrollToElement(document.querySelector('.search-result-block .searched-videos').firstElementChild,1)
-    setTimeout(function(){resize()},500);
-    setTimeout(()=>{scrollToElement(document.querySelector('.search-result-block .searched-videos').childNodes[document.querySelector('.search-result-block .searched-videos').childNodes.length - 2],0)},501) 
-}
-
-function resize(){
-    if(currentPage<0) currentPage=0;
-     numberOfPages.textContent=currentPage+1;
-        
-     if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
-        cleanSearchBlock();
-         lastWindowSizeIndex=1;
-         createPages(8);
-         if(currentPage>=pages.length){
-            currentPage=pages.length-1;
-        }
-         renderPage(currentPage);
-     }
-     else if(document.body.clientWidth>800 && document.body.clientWidth<1000 && lastWindowSizeIndex!==2){
-        cleanSearchBlock();
-        lastWindowSizeIndex=2;
-         createPages(6);
-         if(currentPage>=pages.length){
-            currentPage=pages.length-1;
-        }
-         renderPage(currentPage);
-    }
-     else if(document.body.clientWidth>730 && document.body.clientWidth<800 && lastWindowSizeIndex!==3){
-        cleanSearchBlock();
-        lastWindowSizeIndex=3;
-         createPages(4);
-         if(currentPage>=pages.length){
-            currentPage=pages.length-1;
-        }
-         renderPage(currentPage);
-    }
-     else if(document.body.clientWidth>550 && document.body.clientWidth<730  && lastWindowSizeIndex!==4){
-        cleanSearchBlock();
-        lastWindowSizeIndex=4;
-         createPages(3)
-         if(currentPage>=pages.length){
-            currentPage=pages.length-1;
-        }
-         renderPage(currentPage);
-        }
-     else if(document.body.clientWidth>200 && document.body.clientWidth<550  && lastWindowSizeIndex!==5){
-        cleanSearchBlock();
-        lastWindowSizeIndex=5;
-         createPages(2);
-         if(currentPage>=pages.length){
-            currentPage=pages.length-1;
-        }
-        
-        if(currentPage>0){
-        renderPage(currentPage-1);
-        }
-         renderPage(currentPage);
-        renderPage(currentPage+1);
-        }
-}
-
-
-
-function select(){
-    outBlock.src=this.alt;
-}
-
-
-
-
-var initialPoint;
-var finalPoint;
-
-block.addEventListener('touchstart', function(event) {
-event.preventDefault();
-event.stopPropagation();
-initialPoint=event.changedTouches[0];
-}, false);
-
-block.addEventListener('touchend', function(event) {
-event.preventDefault();
-event.stopPropagation();
-finalPoint=event.changedTouches[0];
-var xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
-var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
-if (xAbs > 20 || yAbs > 20) {
-if (xAbs > yAbs) {
-if (finalPoint.pageX < initialPoint.pageX){
-    nextPage()
-/*СВАЙП ВЛЕВО*/}
-else{
-
-    prevPage()
-/*СВАЙП ВПРАВО*/}
-}
-}
-}, false);
-
-
 function scrollToElement(theElement,par) {
 
     
@@ -298,5 +132,166 @@ function scrollToElement(theElement,par) {
 
 }
 
+function cleanSearchBlock(){
+    while(block.firstChild){
+        block.removeChild(block.firstChild);
+    }
+}
 
+function createPages(size){
+    let pagesCount=Math.ceil(bufferedVideos.length/size);
+    pages=[];
+    
+    let placed=0;
+    for(let i=0;i<pagesCount;i++){
+        pages[i]=[];
+        for(let j=0; j<size;j++){
+            if(placed<bufferedVideos.length){
+                pages[i].push(bufferedVideos[placed]);
+                placed++;
+            }
+        }
+    }
+}
+
+function renderPage(number,type){
+
+    PageItem=document.createElement('div');
+    PageItem.className='searched-page';
+
+    item=block.lastElementChild;
+
+    let urlVideoBase='https://www.youtube.com/embed/';
+    for (let i=0;i<pages[number].length;i++){
+        item=document.createElement('img');
+        item.className='searched-video';
+        
+        item.alt=urlVideoBase+ pages[number][i].videoId;
+        item.src=pages[number][i].imageSource;
+        item.addEventListener("click", select);
+        PageItem.appendChild(item);
+    }
+    if(type==='after'){
+    block.appendChild(PageItem)
+    }
+    if(type==='before'){
+        block.insertBefore(PageItem,block.firstChild);
+    }
+  
+}
+
+function nextPage(){
+    lastWindowSizeIndex=0;
+    currentPage += 1;
+    if(currentPage>=pages.length-1){
+        load();
+        renderPage(currentPage,'after');
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
+        setTimeout(function(){resize()},1000);
+    }
+    else {
+        renderPage(currentPage,'after');
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
+        setTimeout(function(){resize()},500);
+    }
+    
+}
+
+function prevPage(){
+    lastWindowSizeIndex=0;
+    if(currentPage !==0 ){
+        currentPage -= 1;
+        renderPage(currentPage,'before');
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,0)
+        scrollToElement(document.querySelector('.search-result-block .searched-videos').firstElementChild,1)
+        setTimeout(function(){resize()},500);
+    }
+}
+
+function resize(){
+    if(currentPage<0) currentPage=0;
+     numberOfPages.textContent=currentPage+1;
+        
+     if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
+        cleanSearchBlock();
+         lastWindowSizeIndex=1;
+         createPages(8);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
+         renderPage(currentPage,'after');
+     }
+     else if(document.body.clientWidth>800 && document.body.clientWidth<1000 && lastWindowSizeIndex!==2){
+        cleanSearchBlock();
+        lastWindowSizeIndex=2;
+         createPages(6);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
+         renderPage(currentPage,'after');
+    }
+     else if(document.body.clientWidth>730 && document.body.clientWidth<800 && lastWindowSizeIndex!==3){
+        cleanSearchBlock();
+        lastWindowSizeIndex=3;
+         createPages(4);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
+         renderPage(currentPage,'after');
+    }
+     else if(document.body.clientWidth>550 && document.body.clientWidth<730  && lastWindowSizeIndex!==4){
+        cleanSearchBlock();
+        lastWindowSizeIndex=4;
+         createPages(3)
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
+         renderPage(currentPage,'after');
+        }
+     else if(document.body.clientWidth>200 && document.body.clientWidth<550  && lastWindowSizeIndex!==5){
+        cleanSearchBlock();
+        lastWindowSizeIndex=5;
+         createPages(2);
+         if(currentPage>=pages.length){
+            currentPage=pages.length-1;
+        }
+         renderPage(currentPage,'after');
+        }
+}
+
+
+function select(){
+    outBlock.src=this.alt;
+}
+
+
+
+function init(){
+var initialPoint;
+var finalPoint;
+
+block.addEventListener('touchstart', function(event) {
+event.preventDefault();
+event.stopPropagation();
+initialPoint=event.changedTouches[0];
+}, false);
+
+block.addEventListener('touchend', function(event) {
+event.preventDefault();
+event.stopPropagation();
+finalPoint=event.changedTouches[0];
+var xAbs = Math.abs(initialPoint.pageX - finalPoint.pageX);
+var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
+if (xAbs > 20 || yAbs > 20) {
+if (xAbs > yAbs) {
+if (finalPoint.pageX < initialPoint.pageX){
+    nextPage()}
+else{
+    prevPage()}
+}
+}
+}, false);
+}
+
+init();
 

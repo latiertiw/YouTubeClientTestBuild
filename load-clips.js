@@ -1,6 +1,6 @@
 block=document.querySelector('.search-result-block .searched-videos');
 button=document.querySelector('.search-block .search-button');
-outBlock=document.querySelector('.video-block .output-video-block');
+outBlock=document.querySelector('.video-block .output-video-block iframe');
 searchInput=document.querySelector('.search-block .search-input');
 pageRight=document.querySelector('.page-switcher .page-right');
 pageLeft=document.querySelector('.page-switcher .page-left');
@@ -21,7 +21,6 @@ let lastWindowSizeIndex=0;
 
 
 
-button.addEventListener("click", search);
 
 function load(){
     Url=baseUrl+'&pageToken='+nextPageToken+'&q='+lastSearch;
@@ -171,7 +170,7 @@ function renderPage(number,type){
         item.className='searched-video';
         
         
-        let info=urlVideoBase+pages[number][i].videoId+' '+pages[number][i].channelTitle+' '+pages[number][i].videoDescription+' '+pages[number][i].videoTitle+' '+pages[number][i].publishedTime+' '+pages[number][i].viewCount;
+        let info=urlVideoBase+pages[number][i].videoId+'___'+pages[number][i].channelTitle+'___'+pages[number][i].videoDescription+'___'+pages[number][i].videoTitle+'___'+pages[number][i].publishedTime+'___'+pages[number][i].viewCount;
         item.alt=info;
         item.src=pages[number][i].imageSource;
         item.addEventListener("click", select);
@@ -217,13 +216,26 @@ function prevPage(){
 function resize(){
 
     if(currentPage<0) currentPage=0;
-     //numberOfPages.textContent=currentPage+1;
+
+  /*   if(lastWindowSizeIndex!=0){
+        let p1=currentPage*pages[0].length;
+    }
+     */
+    
         
      if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
         cleanSearchBlock();
         mark();
          lastWindowSizeIndex=1;
          createPages(8);
+
+
+        /*  for(let i=0;p2<p1;i++){
+            let p2=pages[0].length*currentPage;
+         }
+         currentPage=p2;
+ */
+
          if(currentPage>=pages.length){
             currentPage=pages.length-1;
         }
@@ -234,6 +246,8 @@ function resize(){
         mark();
         lastWindowSizeIndex=2;
          createPages(6);
+
+        
          if(currentPage>=pages.length){
             currentPage=pages.length-1;
         }
@@ -244,6 +258,7 @@ function resize(){
         mark();
         lastWindowSizeIndex=3;
          createPages(4);
+         
          if(currentPage>=pages.length){
             currentPage=pages.length-1;
         }
@@ -271,8 +286,12 @@ function resize(){
 }
 
 function select(){
-    let Info=this.alt.split(' ');
+    let Info=this.alt.split('___');
+    console.log(Info)
     outBlock.src=Info[0];
+    document.querySelector('.top-info-block .info-title').textContent=Info[3];
+    document.querySelector('.video-block .bottom-info-block ').textContent=Info[2];
+    document.querySelector('.top-info-block .info-title').textContent=Info[3];
 }
 
 function init(){
@@ -319,8 +338,9 @@ block.addEventListener('mouseup', function(event) {
         prevPage()}
     }, false);    
 
+
+    button.addEventListener("click", search);
 }
-init();
 
 function mark(){
 
@@ -346,3 +366,7 @@ function mark(){
         cur.style.cssText='background-color: rgb(0, 204, 255);';
       }
 }
+
+
+
+init();

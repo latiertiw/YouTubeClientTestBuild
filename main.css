@@ -118,41 +118,49 @@ body{
             width: 100%;
             background: rgb(163, 126, 126);
             display: flex;
-            justify-content: space-around
+            justify-content: space-between;
         }
 
                 .search-result-block .page-switcher .page-left{
                     height: 100%;
-                    width: 35%;
+                    width: 80px;
+                    max-width: 80px;
                     background-color: rgb(74, 74, 163);
 
                     background-image: url(img/arrow-left.png); 
                     background-size: contain;
+                    background-repeat: no-repeat;
                   
                 }
 
                 .search-result-block .page-switcher .current-page{
                     height: 100%;
-                    width: 50px;
+                  width: 100%;
                     background-color: rgb(74, 74, 163);
+                    
                     display: flex;
-                    justify-content: space-around;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    margin: 0% 10%;
                 }
                      
                     .search-result-block .page-switcher .current-page .dot{
-                        width: 20px;
-                        height: 20px;
+                        width: 6px;
+                        height: 6px;
+                        margin: 0px 1%;
                         background-color: white;
                         border-radius: 100px;
                      }
 
                 .search-result-block .page-switcher .page-right{
                     height: 100%;
-                    width: 35%;
+                    width: 80px;
+                    max-width: 80px;
                     background-color: rgb(74, 74, 163);
 
                     background-image: url(img/arrow-right.png);
                     background-size: contain;
+                    background-repeat: no-repeat;
                 }
 
         .searched-videos{

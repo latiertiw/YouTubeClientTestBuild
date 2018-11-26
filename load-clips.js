@@ -99,13 +99,13 @@ function search(){
         loadedCount++;
        }
        setTimeout(function(){resize()},1000);
+       setTimeout(function(){mark()},1010);
     })
    
     
     
 
 }
-
 
 function scrollToElement(theElement,par) {
 
@@ -217,7 +217,7 @@ function prevPage(){
 function resize(){
 
     if(currentPage<0) currentPage=0;
-     numberOfPages.textContent=currentPage+1;
+     //numberOfPages.textContent=currentPage+1;
         
      if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
         cleanSearchBlock();
@@ -231,6 +231,7 @@ function resize(){
      }
      else if(document.body.clientWidth>800 && document.body.clientWidth<1000 && lastWindowSizeIndex!==2){
         cleanSearchBlock();
+        mark();
         lastWindowSizeIndex=2;
          createPages(6);
          if(currentPage>=pages.length){
@@ -240,6 +241,7 @@ function resize(){
     }
      else if(document.body.clientWidth>730 && document.body.clientWidth<800 && lastWindowSizeIndex!==3){
         cleanSearchBlock();
+        mark();
         lastWindowSizeIndex=3;
          createPages(4);
          if(currentPage>=pages.length){
@@ -249,6 +251,7 @@ function resize(){
     }
      else if(document.body.clientWidth>550 && document.body.clientWidth<730  && lastWindowSizeIndex!==4){
         cleanSearchBlock();
+        mark();
         lastWindowSizeIndex=4;
          createPages(3)
          if(currentPage>=pages.length){
@@ -267,13 +270,10 @@ function resize(){
         }
 }
 
-
 function select(){
     let Info=this.alt.split(' ');
     outBlock.src=Info[0];
 }
-
-
 
 function init(){
 var initialPoint;
@@ -323,10 +323,26 @@ block.addEventListener('mouseup', function(event) {
 init();
 
 function mark(){
-    k=numberOfPages;
+
     for(let i=0;i<pages.length;i++){
         item=document.createElement('div')
         item.className='dot';
-        k.appendChild(item);
-    }
+        numberOfPages.appendChild(item);
+    } 
+
+
+    if(pages.length>=10){
+          for(let i=0;i<pages.length;i++){
+            let cur=numberOfPages.childNodes[i];
+            cur.style.cssText='height:3px;width:3px';
+
+          }
+        
+       
+     }
+
+     if(pages.length>=1){
+        let cur=numberOfPages.childNodes[currentPage];
+        cur.style.cssText='background-color: rgb(0, 204, 255);';
+      }
 }

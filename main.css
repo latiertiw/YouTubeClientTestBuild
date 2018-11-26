@@ -135,7 +135,16 @@ body{
                     height: 100%;
                     width: 50px;
                     background-color: rgb(74, 74, 163);
+                    display: flex;
+                    justify-content: space-around;
                 }
+                     
+                    .search-result-block .page-switcher .current-page .dot{
+                        width: 20px;
+                        height: 20px;
+                        background-color: white;
+                        border-radius: 100px;
+                     }
 
                 .search-result-block .page-switcher .page-right{
                     height: 100%;

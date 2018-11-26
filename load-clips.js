@@ -136,6 +136,10 @@ function cleanSearchBlock(){
     while(block.firstChild){
         block.removeChild(block.firstChild);
     }
+
+    while(numberOfPages.firstChild){
+        numberOfPages.removeChild(numberOfPages.firstChild);
+    }
 }
 
 function createPages(size){
@@ -211,11 +215,13 @@ function prevPage(){
 }
 
 function resize(){
+
     if(currentPage<0) currentPage=0;
      numberOfPages.textContent=currentPage+1;
         
      if(document.body.clientWidth>1000 && lastWindowSizeIndex!==1 ){
         cleanSearchBlock();
+        mark();
          lastWindowSizeIndex=1;
          createPages(8);
          if(currentPage>=pages.length){
@@ -294,7 +300,33 @@ else{
 }
 }
 }, false);
-}
 
+
+
+block.addEventListener('mousedown', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    initialPoint=event.pageX;
+    }, false);
+
+block.addEventListener('mouseup', function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     finalPoint=event.pageX;
+     if ((initialPoint - finalPoint)>0){
+        nextPage()}
+     else{
+        prevPage()}
+    }, false);    
+
+}
 init();
 
+function mark(){
+    k=numberOfPages;
+    for(let i=0;i<pages.length;i++){
+        item=document.createElement('div')
+        item.className='dot';
+        k.appendChild(item);
+    }
+}

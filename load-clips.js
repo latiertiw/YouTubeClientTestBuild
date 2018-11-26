@@ -170,7 +170,7 @@ function renderPage(number,type){
         item.className='searched-video';
         
         
-        let info=urlVideoBase+pages[number][i].videoId+'___'+pages[number][i].channelTitle+'___'+pages[number][i].videoDescription+'___'+pages[number][i].videoTitle+'___'+pages[number][i].publishedTime+'___'+pages[number][i].viewCount;
+        let info=urlVideoBase+pages[number][i].videoId+'___'+pages[number][i].channelTitle+'___'+pages[number][i].videoDescription+'___'+pages[number][i].videoTitle+'___'+pages[number][i].publishedTime+'___'+pages[number][i].viewCount+'___'+pages[number][i].likeCount+'___'+pages[number][i].dislikeCount;
         item.alt=info;
         item.src=pages[number][i].imageSource;
         item.addEventListener("click", select);
@@ -290,8 +290,10 @@ function select(){
     console.log(Info)
     outBlock.src=Info[0];
     document.querySelector('.top-info-block .info-title').textContent=Info[3];
-    document.querySelector('.video-block .bottom-info-block ').textContent=Info[2];
-    document.querySelector('.top-info-block .info-title').textContent=Info[3];
+    document.querySelector('.top-info-block .info-views .countOfViews').textContent=Info[5];
+    document.querySelector('.top-info-block .info-views .likes').textContent=Info[6];
+    document.querySelector('.top-info-block .info-views .dislikes').textContent=Info[7];
+    document.querySelector('.video-block .bottom-info-block').textContent=Info[2];
 }
 
 function init(){

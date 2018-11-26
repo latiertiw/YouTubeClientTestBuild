@@ -287,7 +287,7 @@ function resize(){
 
 function select(){
     let Info=this.alt.split('___');
-    console.log(Info)
+   // console.log(Info)
     outBlock.src=Info[0];
     document.querySelector('.top-info-block .info-title').textContent=Info[3];
     document.querySelector('.top-info-block .info-views .countOfViews').textContent=Info[5];
@@ -315,9 +315,11 @@ var yAbs = Math.abs(initialPoint.pageY - finalPoint.pageY);
 if (xAbs > 20 || yAbs > 20) {
 if (xAbs > yAbs) {
 if (finalPoint.pageX < initialPoint.pageX){
-    nextPage()}
+    nextPage()
+}
 else{
-    prevPage()}
+    prevPage()
+}
 }
 }
 }, false);
@@ -334,10 +336,12 @@ block.addEventListener('mouseup', function(event) {
      event.preventDefault();
      event.stopPropagation();
      finalPoint=event.pageX;
-     if ((initialPoint - finalPoint)>0){
-        nextPage()}
+     if ((initialPoint - finalPoint)>=0){
+        nextPage()
+    }
      else{
-        prevPage()}
+        prevPage()
+    }
     }, false);    
 
 

@@ -63,7 +63,10 @@ function search(){
     pageLeft.addEventListener("click", prevPage);
     window.addEventListener('resize', resize);
     bufferedVideos=[];
-    nextPageToken='';
+    pages=[];
+    currentPage=0;
+    lastWindowSizeIndex=0;
+   
     lastSearch=searchInput.value;
     Url=baseUrl+'&pageToken='+nextPageToken+'&q='+searchInput.value;
     fetch(Url)
@@ -98,7 +101,7 @@ function search(){
         loadedCount++;
        }
        setTimeout(function(){resize()},1000);
-       setTimeout(function(){mark()},1010);
+       setTimeout(function(){mark()},1050);
     })
    
     
@@ -166,13 +169,21 @@ function renderPage(number,type){
 
     let urlVideoBase='https://www.youtube.com/embed/';
     for (let i=0;i<pages[number].length;i++){
-        item=document.createElement('img');
+        item=document.createElement('div');
         item.className='searched-video';
         
-        
+        let innerItem=document.createElement('img');
+        innerItem.src=pages[number][i].imageSource;
+        innerItem.className='image';
+        item.appendChild(innerItem);
+
+        innerItem=document.createElement('div');
+        innerItem.textContent=pages[number][i].videoTitle;
+        innerItem.className='title';
+        item.appendChild(innerItem);
+
         let info=urlVideoBase+pages[number][i].videoId+'___'+pages[number][i].channelTitle+'___'+pages[number][i].videoDescription+'___'+pages[number][i].videoTitle+'___'+pages[number][i].publishedTime+'___'+pages[number][i].viewCount+'___'+pages[number][i].likeCount+'___'+pages[number][i].dislikeCount;
         item.alt=info;
-        item.src=pages[number][i].imageSource;
         item.addEventListener("click", select);
         PageItem.appendChild(item);
     }
@@ -189,6 +200,7 @@ function nextPage(){
     lastWindowSizeIndex=0;
     currentPage += 1;
     if(currentPage>=pages.length-1){
+        currentPage=pages.length-1;
         load();
         renderPage(currentPage,'after');
         scrollToElement(document.querySelector('.search-result-block .searched-videos').lastElementChild,1)
@@ -276,6 +288,7 @@ function resize(){
         }
      else if(document.body.clientWidth>200 && document.body.clientWidth<550  && lastWindowSizeIndex!==5){
         cleanSearchBlock();
+        mark();
         lastWindowSizeIndex=5;
          createPages(2);
          if(currentPage>=pages.length){
@@ -287,13 +300,14 @@ function resize(){
 
 function select(){
     let Info=this.alt.split('___');
-   // console.log(Info)
     outBlock.src=Info[0];
     document.querySelector('.top-info-block .info-title').textContent=Info[3];
-    document.querySelector('.top-info-block .info-views .countOfViews').textContent=Info[5];
-    document.querySelector('.top-info-block .info-views .likes').textContent=Info[6];
-    document.querySelector('.top-info-block .info-views .dislikes').textContent=Info[7];
-    document.querySelector('.video-block .bottom-info-block').textContent=Info[2];
+    document.querySelector('.top-info-block .info-views .countOfViews .value').textContent=Info[5];
+    document.querySelector('.top-info-block .info-views .likes .value').textContent=' '+Info[6];
+    document.querySelector('.top-info-block .info-views .dislikes .value').textContent=' '+Info[7];
+    document.querySelector('.video-block .bottom-info-block .description').textContent=Info[2];
+    document.querySelector('.video-block .bottom-info-block .date').textContent=Info[4];
+    document.querySelector('.video-block .bottom-info-block .channelName').textContent=Info[1];
 }
 
 function init(){
@@ -336,7 +350,7 @@ block.addEventListener('mouseup', function(event) {
      event.preventDefault();
      event.stopPropagation();
      finalPoint=event.pageX;
-     if ((initialPoint - finalPoint)>=0){
+     if ((initialPoint - finalPoint)>0){
         nextPage()
     }
      else{

@@ -341,21 +341,22 @@ else{
 
 
 block.addEventListener('mousedown', function(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    //event.preventDefault();
+   // event.stopPropagation();
     initialPoint=event.pageX;
     }, false);
 
 block.addEventListener('mouseup', function(event) {
-     event.preventDefault();
-     event.stopPropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
      finalPoint=event.pageX;
-     if ((initialPoint - finalPoint)>0){
+     if ((initialPoint - finalPoint)>10){
         nextPage()
     }
-     else{
+     else if((initialPoint - finalPoint)<-10){
         prevPage()
     }
+    else{}
     }, false);    
 
 

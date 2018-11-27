@@ -308,6 +308,7 @@ function select(){
     document.querySelector('.video-block .bottom-info-block .description').textContent=Info[2];
     document.querySelector('.video-block .bottom-info-block .date').textContent=Info[4];
     document.querySelector('.video-block .bottom-info-block .channelName').textContent=Info[1];
+    k();
 }
 
 function init(){
@@ -387,7 +388,10 @@ function mark(){
         cur.style.cssText='background-color: rgb(0, 204, 255);';
       }
 }
-
+function k(){
+    document.querySelector('.video-block .top-info-block').style.cssText='display:flex'
+    document.querySelector('.video-block .bottom-info-block').style.cssText='display:flex'
+}
 
 
 init();

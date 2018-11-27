@@ -125,6 +125,7 @@ body{
             justify-content: space-between;
 
             font-size: 18px;
+            display: none;
         }
                 .video-block .top-info-block .info-title{
                     width: 450px;
@@ -184,6 +185,11 @@ body{
                                 background-size: 100% 100%;
                                 background-image: url(img/like.png)
                             }
+                            .video-block .top-info-block .info-views .likes .image:hover { 
+                                background-color: rgba(206, 206, 206, 0.514);
+                                background-blend-mode: lighten;
+                                cursor: pointer;
+                            }
                             .video-block .top-info-block .info-views .likes .value{
 
                             }
@@ -202,6 +208,13 @@ body{
                                 background-size: 100% 100%;
                                 background-image: url(img/dislike.png)
                             }
+
+                            .video-block .top-info-block .info-views .dislikes .image:hover { 
+                                background-color: rgba(206, 206, 206, 0.514);
+                                background-blend-mode: lighten;
+                                cursor: pointer;
+                            }
+
                             .video-block .top-info-block .info-views .dislikes .value{
                                 
                             }
@@ -219,6 +232,7 @@ body{
            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
            font-size: 15px;
            border-bottom: 10px solid rgb(119, 37, 173);
+           
         }
                 .video-block .bottom-info-block .date{
                     overflow: hidden;
@@ -479,5 +493,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-size: 30px;
-color: rgba(0, 0, 0, 0.329);
+color: rgba(0, 0, 0, 0.082);
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
   }
